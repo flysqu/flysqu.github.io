@@ -1,8 +1,8 @@
 # flask/Dockerfile
-FROM python:3.9-slim
+FROM python:3.12
 WORKDIR /app
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install flask
+RUN pip install requests
 COPY . .
 EXPOSE 5000
 CMD ["python", "app.py"]

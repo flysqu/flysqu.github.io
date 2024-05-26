@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Flying Squirrel</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="icon" type="image/jpg" href="resources/icon_background.ico">
+        <link rel="preload" href="https://fonts.googleapis.com">
+        <link rel="preload" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Coiny&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <script type="module">
+            import { rainbowCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
+            new rainbowCursor({
+                length: 12,
+                colors: ["#5BCEFA","#F5A9B8","#FFFFFF","#F5A9B8","#5BCEFA"],
+                size: 4,
+            });
+
+            fetch('http://localhost:5000/toptracks')
+            .then(response => response.json())
+            .then(topTracks => {
+                const topTracksList = document.getElementById('topTracks');
+
+                topTracks.forEach(track => {
+                    const listItem = document.createElement('a');
+                    
+                    if (track.duration == 0) {
+                        listItem.textContent = `${track.index}: ${track.artist} - ${track.name} (${track.playcount} Plays)`;
+                    } else {
+                        listItem.textContent = `${track.index}: ${track.artist} - ${track.name} (${track.playcount} Plays, ${track.playtime} Hours)`;
+                    }
+
+                    // Create a div to hold the track details
+                    listItem.href = `${track.url}`
+                    listItem.id = `hyperlink_`
+
+                    // Append the list item to the list
+                    topTracksList.appendChild(listItem);
+
+                    const listItema = document.createElement('p');
+                    topTracksList.appendChild(listItema);
+
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        </script>
+        <main>
+            <div id="welcome">
+                <header>My top tracks from <a id="hyperlink" style="color: #ca00fc78; " href="https://www.last.fm/user/flysqu">last.fm</a>!!!!</header>
+            </div>
+            <p></p>
+            <div id="about_me" class="infobox">
+                <div id="topTracks"></div>
+            </div>
+        </main>
+    </body>
+</html>

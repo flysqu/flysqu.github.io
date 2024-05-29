@@ -1,4 +1,4 @@
 # nginx/Dockerfile
 FROM nginx:latest
-COPY html /usr/share/nginx/html
+COPY nginx/html /usr/share/nginx/html
 EXPOSE 80

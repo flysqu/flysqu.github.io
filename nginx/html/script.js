@@ -76,11 +76,6 @@ function spawnGif() {
         div.style.left = `${rw}px`;
 
         div.onclick = function () { div.remove(); }
-        //if (div.getBoundingClientRect().bottom < vh) {
-        //    div.style.top = `0px`
-        //}
-
-        // Append the img element to the div
         div.appendChild(img);
 
 
@@ -109,7 +104,7 @@ function spawnGif() {
             }
         }
         // Call spawnGif again after 10 seconds
-        setTimeout(spawnGif, 1000);
+        setTimeout(spawnGif, 3500);
     };
 
     img.onerror = () => {

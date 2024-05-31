@@ -5,8 +5,3 @@ services:
       context: ./nginx
     ports:
       - "8080:80"
-  flask:
-    build:
-      context: ./flask
-    ports:
-      - "5000:5000"

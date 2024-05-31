@@ -23,7 +23,14 @@ jobs:
       run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Build the Docker image
-      run: docker build . --file nginx/Dockerfile --tag ghcr.io/${{ github.repository }}/my-image-name:${{ env.TAG }}
+      run: |
+        docker build . --file nginx/Dockerfile --tag ghcr.io/${{ github.repository }}/website:${{ env.TAG }}
+        docker tag ghcr.io/${{ github.repository }}/website:${{ env.TAG }} ghcr.io/${{ github.repository }}/website:latest
 
     - name: Push the Docker image
-      run: docker push ghcr.io/${{ github.repository }}/website:${{ env.TAG }}
+      env:
+        CR_PAT: ${{ secrets.GHCR_PAT }}
+      run: |
+        echo $CR_PAT | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ghcr.io/${{ github.repository }}/website:${{ env.TAG }}
+        docker push ghcr.io/${{ github.repository }}/website:latest

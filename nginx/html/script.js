@@ -265,4 +265,3 @@ function spawnGif() {
 }
 
 spawnGif();
-spawnGif();

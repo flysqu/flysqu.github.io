@@ -10,7 +10,7 @@ html, body {
 
 header {
     text-align: center;
-    color:rgb(241, 160, 231);
+    color:#A35A99;
     font-size:larger;
     padding: 3px;
     padding-bottom: 16px;
@@ -18,18 +18,16 @@ header {
     text-decoration: underline;
     text-decoration-thickness: 5px;
 }
-img {
-    max-width: 150px;
-}
+
 
 .text {
     text-align: center;
-    color:rgb(241, 160, 231);
+    color:#A35A99;
     font-size:large;
 }
 
 #hyperlink {
-    color: #ca00fc78;
+    color: #bb79b2;
     text-decoration-thickness: 5px;
     display: inline-block;
 }
@@ -68,7 +66,7 @@ img {
     padding: 20px;
     text-align: center;
     font-size: large;
-    color:rgb(241, 160, 231);
+    color:#A35A99;
 }
 
 #identitycontainer {

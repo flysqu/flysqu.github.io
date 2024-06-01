@@ -253,14 +253,30 @@ function spawnGif() {
                 window.style.opacity = "100%";
             }
         };
-        setTimeout(spawnGif, 10000);
+        let min = 40
+        let max = 80
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
+        setTimeout(spawnGif, toWait*1000);
     } else if (document.hidden) {
-        setTimeout(spawnGif, 10000);
+        let min = 40
+        let max = 80
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+        console.log(toWait*1000)
+        setTimeout(spawnGif, toWait*1000);
     }
 
     img.onerror = () => {
         console.error(`Failed to load image: ${randomGifPath}`);
-        setTimeout(spawnGif, 10000);
+        let min = 40
+        let max = 80
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
+        setTimeout(spawnGif, toWait*1000);
     };
 }
 

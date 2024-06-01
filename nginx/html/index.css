@@ -61,6 +61,7 @@ header {
 
 .infobox {
     width: 45%;
+    margin-top: 5px !important;
     margin:  auto;
     background-color: rgba(255, 192, 245, 0.5);
     padding: 20px;

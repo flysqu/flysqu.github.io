@@ -228,30 +228,31 @@ function spawnGif() {
             var element = document.getElementById('windowControls');
             var positionInfo = element.getBoundingClientRect();
             console.log(positionInfo.width)
-            img.style.maxWidth = `${windowControls.clientWidth + 30}px`
-
+            
+            img.style.maxWidth = `${windowControls.clientWidth}px`
             window.appendChild(img);
+            
             dragElement(window, windowControls, img, highestZIndex);
             let rect = window.getBoundingClientRect();
             if (rect["top"] < 0) {
-                window.style.top = "5px"
-                img.style.maxWidth = `${windowControls.clientWidth + 30}px`
-                window.style.opacity = "100%";
+                window.remove()
+                spawnGif()
+                return
             }
             else if (rect["bottom"] > vh) {
-                window.style.top = `${vh - img.height - 20}px`
-                img.style.maxWidth = `${windowControls.clientWidth + 30}px`
-                window.style.opacity = "100%";
+                window.remove()
+                spawnGif()
+                return
             }
             else if (rect["right"] > vw) {
-                window.style.left = `${vw - img.width - 20}px`
-                img.style.maxWidth = `${windowControls.clientWidth + 15}px`
-                console.log("left fixed")
-                window.style.opacity = "100%";
+                window.remove()
+                spawnGif()
+                return
             }
             else {
                 window.style.opacity = "100%";
             }
+            
         };
         let min = 40
         let max = 80

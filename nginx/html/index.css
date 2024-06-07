@@ -3,9 +3,21 @@
     font-weight: 400;
     font-style: normal;
 }
-html, body {
+html, body, .desktop {
     margin: 0;
     height: 100%;
+}
+
+#desktopIcon {
+    border: #db8ed1;
+    background-color: #ffdcfa;
+    border-width: 5px;
+    border-style: solid;
+    z-index: -1;
+}
+#desktopIcon * {
+    color: #db8ed1;
+    fill: #db8ed1;
 }
 
 header {

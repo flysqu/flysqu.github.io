@@ -5,6 +5,11 @@ new rainbowCursor({
     size: 4,
 });
 
+
+
+
+
+// Spawn Gif Code! (12-285)
 let highestZIndex = 0
 
 const gifPaths = [
@@ -48,7 +53,6 @@ function applyHighestZIndex(element) {
 
     element.style.zIndex = highestZIndex + 1;
 }
-
 
 // credits to w3schools (https://www.w3schools.com/howto/howto_js_draggable.asp) this is based on that
 function dragElement(elmnt, draggable, img, highestZIndex) {
@@ -104,7 +108,6 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         document.onmousemove = null;
     }
 }
-
 
 function spawnGif() {
 
@@ -254,31 +257,82 @@ function spawnGif() {
             }
             
         };
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
-        setTimeout(spawnGif, toWait*1000);
+        //let min = 40
+        //let max = 80
+        //const minCeiled = Math.ceil(min);
+        //const maxFloored = Math.floor(max);
+        //const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
+        //setTimeout(spawnGif, toWait*1000);
     } else if (document.hidden) {
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-        console.log(toWait*1000)
-        setTimeout(spawnGif, toWait*1000);
+        //let min = 40
+        //let max = 80
+        //const minCeiled = Math.ceil(min);
+        //const maxFloored = Math.floor(max);
+        //const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+        //console.log(toWait*1000)
+        //setTimeout(spawnGif, toWait*1000);
     }
 
     img.onerror = () => {
         console.error(`Failed to load image: ${randomGifPath}`);
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
-        setTimeout(spawnGif, toWait*1000);
+        //let min = 40
+        //let max = 80
+        //const minCeiled = Math.ceil(min);
+        //const maxFloored = Math.floor(max);
+        //const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
+        //setTimeout(spawnGif, toWait*1000);
     };
 }
 
-spawnGif();
+// Desktop
+const desktopIcons = {
+    "About Me": {
+        "url": "about-me.html",
+        "icon": "icons/user.svg"
+    },
+};
+
+
+let i = 10
+for (let [name, data] of Object.entries(desktopIcons)) {
+    console.log(name, data["icon"]);
+
+    let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+    const desktopIcon = document.createElement("div");
+    desktopIcon.id = "desktopIcon"
+    desktopIcon.style.position = "absolute";
+    desktopIcon.style.opacity = "100%";
+    desktopIcon.style.top = `${i}px`;
+    desktopIcon.style.left = `10px`;
+    desktopIcon.style.width = `75px`;
+    desktopIcon.style.display = "flex"
+    desktopIcon.style.flexDirection = "column";
+    desktopIcon.style.justifyContent = "center";
+    desktopIcon.style.fontSize = "12px";
+    desktopIcon.style.padding = "3px";
+    
+
+    const img = new Image();
+    img.src = data["icon"];
+    img.id = "img"
+
+    const text = document.createElement("p")
+    text.textContent = name
+    text.style.textAlign = "center"
+
+    //location.href=data["url"]
+    if (data["url"]) {
+        desktopIcon.onclick=function(){console.log("hi")};
+        console.log("Adding href")
+    }
+
+    img.onload = function () {
+        document.body.appendChild(desktopIcon);
+        desktopIcon.appendChild(img)
+        desktopIcon.appendChild(text)
+    }
+
+    i += 150
+}

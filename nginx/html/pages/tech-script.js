@@ -294,6 +294,7 @@ function techSpawnGif(path,isLaptopPic) {
     img.src = randomGifPath;
     img.alt = "Random GIF";
     img.id = "img"
+    img.style.width = `${400}px`
 
     img.onload = () => {
 
@@ -301,6 +302,18 @@ function techSpawnGif(path,isLaptopPic) {
             let rw = Math.floor(Math.random() * (vw));
             let rh = Math.floor(Math.random() * (vh));
 
+            // SOLVE ISSUE THE ISSUE OF THE
+            // Get size of image
+
+            let iwrw = 400 + rw
+            //let ihrh = ih + rh
+            // Check if imgSizeX + rw is more then vw
+            if (iwrw > vw) {
+                spawnGif()
+                console.log("Fixed Out Of Bounds")
+                console.log(`${iwrw}, ${rw}, ${rh}`)
+                return
+            }
 
             // html this creates
             // <div id="window">

@@ -50,7 +50,7 @@ function applyHighestZIndex(element) {
 }
 
 
-// credits to w3schools (https://www.w3schools.com/howto/howto_js_draggable.asp) this is based on that
+// credits to w3schools (https://www.w3schools.com/howto/howto_js_draggable.asp) this is based on that owo
 function dragElement(elmnt, draggable, img, highestZIndex) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var lastTime = 0;
@@ -95,7 +95,20 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         }
     }
 
-    function closeDragElement() {
+    function closeDragElement(e) {
+        // ensure that window is at mouse location when stopping drag uwu
+        e = e || window.event;
+        console.log(e.clientX)
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+
+
+
         document.body.style.cursor = "default";
         img.style.opacity = "100%"
         draggable.style.opacity = "100%"
@@ -125,7 +138,7 @@ function spawnGif() {
     if (!document.hidden) {
         img.onload = () => {
 
-            // Calculate random positions within the viewport
+            // Calculate random positions within the viewport uwu
             let rw = Math.floor(Math.random() * (vw));
             let rh = Math.floor(Math.random() * (vh));
 
@@ -139,7 +152,7 @@ function spawnGif() {
             //   <img id="img">gif</img>
             // </div>
 
-            // set up div
+            // set up div owo
             const window = document.createElement("div");
             window.style.position = "absolute";
             window.style.opacity = "100%";
@@ -150,7 +163,7 @@ function spawnGif() {
             window.style.zIndex = "0"
             window.id = "window";
 
-            // set up window controls
+            // set up window controls uwu
             const windowControls = document.createElement("div")
             windowControls.id = "windowControls"
             const windowName = document.createElement("p")
@@ -165,7 +178,7 @@ function spawnGif() {
             windowControls.appendChild(windowClose)
             window.appendChild(windowControls)
 
-            // Create a div to hold the GIF
+            // Create a div to hold the GIF owo
             var css = `
                         #window {
                           display: flex;

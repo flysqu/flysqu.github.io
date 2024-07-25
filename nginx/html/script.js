@@ -20,7 +20,7 @@ if (els.length == 0) {
         '../resources/gifs/many-bocchis-dance.gif',
         '../resources/gifs/bocchi-solo-dance.gif',
         '../resources/gifs/cat-keyboard.gif',
-        '../resources/gifs/hatsune-miku-ear-flap.gif',
+        '../resources/gifs/miku-ear-flap.gif',
         '../resources/gifs/hatsune-miku.gif',
         '../resources/gifs/kaido-shun1.gif',
         '../resources/gifs/kaido-shun2.gif',
@@ -46,7 +46,7 @@ if (els.length == 0) {
         'resources/gifs/many-bocchis-dance.gif',
         'resources/gifs/bocchi-solo-dance.gif',
         'resources/gifs/cat-keyboard.gif',
-        'resources/gifs/hatsune-miku-ear-flap.gif',
+        'resources/gifs/miku-ear-flap.gif',
         'resources/gifs/hatsune-miku.gif',
         'resources/gifs/kaido-shun1.gif',
         'resources/gifs/kaido-shun2.gif',
@@ -185,8 +185,8 @@ function spawnGif() {
             // Check if imgSizeX + rw is more then vw
             if (iwrw > vw) {
                 spawnGif()
-                console.log("Fixed Out Of Bounds")
-                console.log(`${iwrw}, ${rw}, ${rh}`)
+                //console.log("Fixed Out Of Bounds")
+                //console.log(`  ${iwrw}, ${rw}, ${rh}`)
                 return
             }
             //if (ihrh + rh > vh) {

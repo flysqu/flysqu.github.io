@@ -25,7 +25,9 @@ header {
     color:#A35A99;
     font-size:large;
 }
-
+#hyperlink_right {
+    opacity: 0;
+}
 #hyperlink {
     color: #bb79b2;
     text-decoration-thickness: 5px;

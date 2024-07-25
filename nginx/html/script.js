@@ -7,31 +7,61 @@ new rainbowCursor({
 
 let highestZIndex = 0
 
-const gifPaths = [
-    'gifs/anime-hacking.gif',
-    'gifs/anime-waves-hi.gif',
-    'gifs/blahaj-spinning.gif',
-    'gifs/blahaj-sunset.gif',
-    'gifs/bocchi-the-rock-despair.gif',
-    'gifs/bocchi-cry.gif',
-    'gifs/bocchi-the-rock-many-dance.gif',
-    'gifs/bocchi-the-rock-solo-dance.gif',
-    'gifs/cat-keyboard.gif',
-    'gifs/hatsune-miku-ear-flap.gif',
-    'gifs/hatsune-miku.gif',
-    'gifs/jdydhda-kaiduo.gif',
-    'gifs/kaido-shun-kaido.gif',
-    'gifs/kinger-digital-circus.gif',
-    'gifs/kitty-soggen.gif',
-    'gifs/madeline-celeste.gif',
-    'gifs/miku-seseren.gif',
-    'gifs/miku.gif',
-    'gifs/patapata.gif',
-    'gifs/saiki-k-saiki-kuriko.gif',
-    'gifs/the-promised-neverland-anime.gif',
-    'gifs/venetian-snares-vsnares.gif',
-    'gifs/violent-cat.gif',
-];
+// fucky fix
+var els = document.querySelectorAll('[id^="index.css"]');
+if (els.length == 0) {
+    var gifPaths = [
+        '../resources/gifs/anime-hacking.gif',
+        '../resources/gifs/anime-waves-hi.gif',
+        '../resources/gifs/blahaj-spinning.gif',
+        '../resources/gifs/blahaj-sunset.gif',
+        '../resources/gifs/bocchi-the-rock-despair.gif',
+        '../resources/gifs/bocchi-cry.gif',
+        '../resources/gifs/bocchi-the-rock-many-dance.gif',
+        '../resources/gifs/bocchi-the-rock-solo-dance.gif',
+        '../resources/gifs/cat-keyboard.gif',
+        '../resources/gifs/hatsune-miku-ear-flap.gif',
+        '../resources/gifs/hatsune-miku.gif',
+        '../resources/gifs/jdydhda-kaiduo.gif',
+        '../resources/gifs/kaido-shun-kaido.gif',
+        '../resources/gifs/kinger-digital-circus.gif',
+        '../resources/gifs/kitty-soggen.gif',
+        '../resources/gifs/madeline-celeste.gif',
+        '../resources/gifs/miku-seseren.gif',
+        '../resources/gifs/miku.gif',
+        '../resources/gifs/patapata.gif',
+        '../resources/gifs/saiki-k-saiki-kuriko.gif',
+        '../resources/gifs/the-promised-neverland-anime.gif',
+        '../resources/gifs/venetian-snares-vsnares.gif',
+        '../resources/gifs/violent-cat.gif',
+    ];
+}else {
+    var gifPaths = [
+        'resources/gifs/anime-hacking.gif',
+        'resources/gifs/anime-waves-hi.gif',
+        'resources/gifs/blahaj-spinning.gif',
+        'resources/gifs/blahaj-sunset.gif',
+        'resources/gifs/bocchi-the-rock-despair.gif',
+        'resources/gifs/bocchi-cry.gif',
+        'resources/gifs/bocchi-the-rock-many-dance.gif',
+        'resources/gifs/bocchi-the-rock-solo-dance.gif',
+        'resources/gifs/cat-keyboard.gif',
+        'resources/gifs/hatsune-miku-ear-flap.gif',
+        'resources/gifs/hatsune-miku.gif',
+        'resources/gifs/jdydhda-kaiduo.gif',
+        'resources/gifs/kaido-shun-kaido.gif',
+        'resources/gifs/kinger-digital-circus.gif',
+        'resources/gifs/kitty-soggen.gif',
+        'resources/gifs/madeline-celeste.gif',
+        'resources/gifs/miku-seseren.gif',
+        'resources/gifs/miku.gif',
+        'resources/gifs/patapata.gif',
+        'resources/gifs/saiki-k-saiki-kuriko.gif',
+        'resources/gifs/the-promised-neverland-anime.gif',
+        'resources/gifs/venetian-snares-vsnares.gif',
+        'resources/gifs/violent-cat.gif',
+    ];
+}
 
 function applyHighestZIndex(element) {
     let highestZIndex = 0;
@@ -135,8 +165,7 @@ function spawnGif() {
     img.alt = "Random GIF";
     img.id = "img"
 
-    if (!document.hidden) {
-        img.onload = () => {
+    img.onload = () => {
 
             // Calculate random positions within the viewport uwu
             let rw = Math.floor(Math.random() * (vw));
@@ -167,7 +196,7 @@ function spawnGif() {
             const windowControls = document.createElement("div")
             windowControls.id = "windowControls"
             const windowName = document.createElement("p")
-            windowName.textContent = `${randomGifPath.replace("gifs/", "")}`
+            windowName.textContent = `${randomGifPath.replace("resources/gifs/", "").replace("../","")}`
             windowName.id = "windowName"
             const windowClose = document.createElement("button")
             windowClose.id = "windowClose"
@@ -237,60 +266,16 @@ function spawnGif() {
             document.getElementsByTagName('head')[0].appendChild(style);
 
             document.body.appendChild(window);
-
-            var element = document.getElementById('windowControls');
-            var positionInfo = element.getBoundingClientRect();
-            console.log(positionInfo.width)
             
             img.style.maxWidth = `${windowControls.clientWidth}px`
             window.appendChild(img);
             
             dragElement(window, windowControls, img, highestZIndex);
-            let rect = window.getBoundingClientRect();
-            if (rect["top"] < 0) {
-                window.remove()
-                spawnGif()
-                return
-            }
-            else if (rect["bottom"] > vh) {
-                window.remove()
-                spawnGif()
-                return
-            }
-            else if (rect["right"] > vw) {
-                window.remove()
-                spawnGif()
-                return
-            }
-            else {
-                window.style.opacity = "100%";
-            }
-            
-        };
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
-        setTimeout(spawnGif, toWait*1000);
-    } else if (document.hidden) {
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-        console.log(toWait*1000)
-        setTimeout(spawnGif, toWait*1000);
-    }
+    };
+
 
     img.onerror = () => {
         console.error(`Failed to load image: ${randomGifPath}`);
-        let min = 40
-        let max = 80
-        const minCeiled = Math.ceil(min);
-        const maxFloored = Math.floor(max);
-        const toWait = Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The 
-        setTimeout(spawnGif, toWait*1000);
     };
 }
 

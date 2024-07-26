@@ -178,7 +178,7 @@ function techSpawnGif(path,isLaptopPic) {
             //let ihrh = ih + rh
             // Check if imgSizeX + rw is more then vw
             if (iwrw > vw) {
-                spawnGif()
+                techSpawnGif(path,isLaptopPic)
                 console.log("Fixed Out Of Bounds")
                 console.log(`${iwrw}, ${rw}, ${rh}`)
                 return

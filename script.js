@@ -190,10 +190,6 @@ function spawnGif() {
                 return
             }
 
-            let ihrh = 400 + rh
-            if (ihrh > vh) {
-                console.log("Gif spawned out of bounds UwU :3")
-            }
             //if (ihrh + rh > vh) {
             //    spawnGif()
             //    console.log("Fixed Out Of Bounds")

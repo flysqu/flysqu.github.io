@@ -1,67 +1,4 @@
-import { rainbowCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
-new rainbowCursor({
-    length: 12,
-    colors: ["#5BCEFA", "#F5A9B8", "#FFFFFF", "#F5A9B8", "#5BCEFA"],
-    size: 4,
-});
-
 let highestZIndex = 0
-
-// fucky fix
-var els = document.querySelectorAll('[id^="index.css"]');
-if (els.length == 0) {
-    var gifPaths = [
-        '../resources/gifs/anime-hacking.gif',
-        '../resources/gifs/anime-waves-hi.gif',
-        '../resources/gifs/blahaj-spinning.gif',
-        '../resources/gifs/blahaj-sunset.gif',
-        '../resources/gifs/bocchi-the-rock-despair.gif',
-        '../resources/gifs/bocchi-cry.gif',
-        '../resources/gifs/bocchi-the-rock-many-dance.gif',
-        '../resources/gifs/bocchi-the-rock-solo-dance.gif',
-        '../resources/gifs/cat-keyboard.gif',
-        '../resources/gifs/hatsune-miku-ear-flap.gif',
-        '../resources/gifs/hatsune-miku.gif',
-        '../resources/gifs/jdydhda-kaiduo.gif',
-        '../resources/gifs/kaido-shun-kaido.gif',
-        '../resources/gifs/kinger-digital-circus.gif',
-        '../resources/gifs/kitty-soggen.gif',
-        '../resources/gifs/madeline-celeste.gif',
-        '../resources/gifs/miku-seseren.gif',
-        '../resources/gifs/miku.gif',
-        '../resources/gifs/patapata.gif',
-        '../resources/gifs/saiki-k-saiki-kuriko.gif',
-        '../resources/gifs/the-promised-neverland-anime.gif',
-        '../resources/gifs/venetian-snares-vsnares.gif',
-        '../resources/gifs/violent-cat.gif',
-    ];
-}else {
-    var gifPaths = [
-        'resources/gifs/anime-hacking.gif',
-        'resources/gifs/anime-waves-hi.gif',
-        'resources/gifs/blahaj-spinning.gif',
-        'resources/gifs/blahaj-sunset.gif',
-        'resources/gifs/bocchi-the-rock-despair.gif',
-        'resources/gifs/bocchi-cry.gif',
-        'resources/gifs/bocchi-the-rock-many-dance.gif',
-        'resources/gifs/bocchi-the-rock-solo-dance.gif',
-        'resources/gifs/cat-keyboard.gif',
-        'resources/gifs/hatsune-miku-ear-flap.gif',
-        'resources/gifs/hatsune-miku.gif',
-        'resources/gifs/jdydhda-kaiduo.gif',
-        'resources/gifs/kaido-shun-kaido.gif',
-        'resources/gifs/kinger-digital-circus.gif',
-        'resources/gifs/kitty-soggen.gif',
-        'resources/gifs/madeline-celeste.gif',
-        'resources/gifs/miku-seseren.gif',
-        'resources/gifs/miku.gif',
-        'resources/gifs/patapata.gif',
-        'resources/gifs/saiki-k-saiki-kuriko.gif',
-        'resources/gifs/the-promised-neverland-anime.gif',
-        'resources/gifs/venetian-snares-vsnares.gif',
-        'resources/gifs/violent-cat.gif',
-    ];
-}
 
 function applyHighestZIndex(element) {
     let highestZIndex = 0;
@@ -294,5 +231,5 @@ function techSpawnGif(path,isLaptopPic) {
     };
 }
 
-techSpawnGif("../resources/pictures/thinkpad (Medium).JPG", true);
-techSpawnGif("../resources/pictures/surface (Medium).JPG", true);
+techSpawnGif("../resources/pictures/thinkpad.jpg", true);
+techSpawnGif("../resources/pictures/surface.jpg", true);

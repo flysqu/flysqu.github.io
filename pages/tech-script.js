@@ -231,5 +231,5 @@ function techSpawnGif(path,isLaptopPic) {
     };
 }
 
-techSpawnGif("../resources/pictures/thinkpad.jpg", true);
-techSpawnGif("../resources/pictures/surface.jpg", true);
+techSpawnGif("../resources/pictures/thinkpad.JPG", true);
+techSpawnGif("../resources/pictures/surface.JPG", true);

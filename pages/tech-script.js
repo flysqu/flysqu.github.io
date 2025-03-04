@@ -101,6 +101,7 @@ function techSpawnGif(path,isLaptopPic) {
     img.alt = "Random GIF";
     img.id = "img"
     img.style.width = `${400}px`
+    img.style.display = "block"
 
     img.onload = () => {
 
@@ -147,16 +148,34 @@ function techSpawnGif(path,isLaptopPic) {
             const windowName = document.createElement("p")
             windowName.textContent = `${randomGifPath.replace("resources/pictures/", "").replace("../","").replace(" (Medium)","").replace("JPG","jpg")}`
             windowName.id = "windowName"
+            windowName.style.flexGrow = "1"
             const windowClose = document.createElement("button")
             windowClose.id = "windowClose"
             windowClose.textContent = "x"
             windowClose.onclick = function () { window.remove(); }
 
+            const windowMinimize = document.createElement("button")
+            windowMinimize.id = "windowMinimize"
+            windowMinimize.textContent = "-"
+            windowMinimize.onclick = function () {
+                const imgVisibility = img.style.display
+                if (imgVisibility == "block") {
+                    img.style.display = "none";
+                    windowMinimize.textContent = "+"
+                    window.style.opacity="0.5"
+
+                } else if (imgVisibility == "none"){
+                    img.style.display = "block"; 
+                    windowMinimize.textContent = "-"
+                    window.style.opacity="1"
+                }
+            }
+
             windowControls.appendChild(windowName)
+            windowControls.appendChild(windowMinimize)
             windowControls.appendChild(windowClose)
             window.appendChild(windowControls)
 
-            
             // Create a div to hold the GIF owo
             var css = `
                         #window {
@@ -233,3 +252,4 @@ function techSpawnGif(path,isLaptopPic) {
 
 techSpawnGif("../resources/pictures/thinkpad.JPG", true);
 techSpawnGif("../resources/pictures/surface.JPG", true);
+techSpawnGif("../resources/pictures/macbook.JPG", true);

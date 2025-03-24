@@ -220,8 +220,26 @@ function spawnGif() {
             windowClose.textContent = "x"
             windowClose.onclick = function () { window.remove(); }
 
+            const windowMinimize = document.createElement("button")
+            windowMinimize.id = "windowMinimize"
+            windowMinimize.textContent = "-"
+            windowMinimize.onclick = function () {
+                const imgVisibility = img.style.display
+                if (imgVisibility == "block") {
+                    img.style.display = "none";
+                    windowMinimize.textContent = "+"
+                    window.style.opacity="0.5"
+
+                } else if (imgVisibility == "none"){
+                    img.style.display = "block"; 
+                    windowMinimize.textContent = "-"
+                    window.style.opacity="1"
+                }
+            }
+
             windowControls.appendChild(windowName)
             windowControls.appendChild(windowClose)
+            windowControls.appendChild(windowMinimize)
             window.appendChild(windowControls)
 
             // Create a div to hold the GIF owo

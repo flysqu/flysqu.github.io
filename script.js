@@ -161,10 +161,11 @@ function spawnGif() {
     img.src = randomGifPath;
     img.alt = "Random GIF";
     img.id = "img"
-    img.style.width = `${200}px`
+    img.style.width = `${225}px`
+    img.style.display = "block"
+
 
     img.onload = () => {
-
             // Calculate random positions within the viewport uwu
             let rw = getRandomArbitrary(0,vw)
             let rh = getRandomArbitrary(0,vh)
@@ -238,8 +239,8 @@ function spawnGif() {
             }
 
             windowControls.appendChild(windowName)
-            windowControls.appendChild(windowClose)
             windowControls.appendChild(windowMinimize)
+            windowControls.appendChild(windowClose)
             window.appendChild(windowControls)
 
             // Create a div to hold the GIF owo
@@ -277,17 +278,25 @@ function spawnGif() {
                         }
           
                         #windowControls button {
-                          margin-left: auto;
                           background-color: rgb(241, 160, 231);
                           color: #5C3357;
                           box-shadow: none;
                           border: none;
                         }
                         
+                        #windowControls button:nth-child(0) {
+                            margin-left: auto;
+                        }
+
+                        #windowControls button:nth-child(2) {
+                            margin-left: auto;
+                        }
+                        
                         #img {
                           font-size: 30px;
                           text-align: center;
                           background-color: red;
+                          min-width
                         }
                       `;
             var style = document.createElement('style');

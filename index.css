@@ -105,3 +105,16 @@ header {
     color:rgba(222, 55, 203, 0.2)
 }
 
+.laptopName {
+    text-decoration: underline;
+    color: #bb79b2 !important;
+    text-decoration-thickness: 3px;
+    cursor: pointer;
+}
+
+.imageIcon {
+    width: 20px;
+    position: relative;
+    top: 7.7px;
+    filter: invert(61%) sepia(13%) saturate(1326%) hue-rotate(257deg) brightness(88%) contrast(81%);
+}

@@ -85,10 +85,22 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
     }
 }
 
-function techSpawnGif(path,isLaptopPic) {
-
-    // Select a random GIF path
+export function techSpawnGif(path,isLaptopPic) {
     //const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
+
+    const existingImages = document.querySelectorAll('img');
+    for (const existingImg of existingImages) {
+        console.log(existingImg.src)
+        if (existingImg.src.includes(path.replace("..",""))) {
+            var audio = new Audio('../resources/audio/invalid.wav');
+            audio.play();
+            return;
+        }
+    }
+
+    var audio = new Audio('../resources/audio/success.wav');
+    audio.play();
+
     const randomGifPath = path
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
@@ -98,13 +110,13 @@ function techSpawnGif(path,isLaptopPic) {
 
     const img = new Image();
     img.src = randomGifPath;
-    img.alt = "Random GIF";
+    img.alt = path;
     img.id = "img"
     img.style.width = `${400}px`
     img.style.display = "block"
 
-    img.onload = () => {
 
+    img.onload = () => {
             // Calculate random positions within the viewport uwu
             let rw = Math.floor(Math.random() * (vw));
             let rh = Math.floor(Math.random() * (vh));
@@ -248,8 +260,13 @@ function techSpawnGif(path,isLaptopPic) {
     img.onerror = () => {
         console.error(`Failed to load image: ${randomGifPath}`);
     };
+    
 }
 
-techSpawnGif("../resources/pictures/thinkpad.JPG", true);
-techSpawnGif("../resources/pictures/surface.JPG", true);
-techSpawnGif("../resources/pictures/macbook.JPG", true);
+function macbook()  { techSpawnGif("../resources/pictures/macbook.JPG", true)  }
+function surface()  { techSpawnGif("../resources/pictures/surface.JPG", true)  }
+function thinkpad() { techSpawnGif("../resources/pictures/thinkpad.JPG", true) }
+
+document.getElementById("macbook").addEventListener("click",macbook);
+document.getElementById("surface").addEventListener("click",surface);
+document.getElementById("thinkpad").addEventListener("click",thinkpad);

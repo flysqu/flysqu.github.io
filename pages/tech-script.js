@@ -263,12 +263,10 @@ export function techSpawnGif(path,isLaptopPic) {
     
 }
 
-function macbook()  { techSpawnGif("../resources/pictures/macbook.JPG", true)  }
-function surface()  { techSpawnGif("../resources/pictures/surface.JPG", true)  }
-function thinkpad() { techSpawnGif("../resources/pictures/thinkpad.JPG", true) }
-function pixel3a()  { techSpawnGif("../resources/pictures/pixel3a.JPG", true)}
-
-document.getElementById("macbook").addEventListener("click",macbook);
-document.getElementById("surface").addEventListener("click",surface);
-document.getElementById("thinkpad").addEventListener("click",thinkpad);
-document.getElementById("pixel3a").addEventListener("click",pixel3a);
+document.querySelectorAll(".openImage").forEach(element => {
+    element.addEventListener("click", function () {
+      const imageName = this.getAttribute("data-image");
+      const imagePath = `../resources/pictures/${imageName}`;
+      techSpawnGif(imagePath, true);
+    });
+  });

@@ -40,16 +40,24 @@ header {
 }
 #header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative; /* Allows positioning of child elements */
 }
 .back {
-    margin-left: 0;
+    position: absolute; /* Remove from the flex flow */
+    left: 0; /* Position it on the left side */
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
 }
 .header {
-    margin-left: auto;
-    margin-right: auto;
+    text-align: center;
 }
+
+.badges img {
+    height: 27px;
+}
+
 #welcome {
     background-color: rgba(255, 192, 245, 0.5);
     padding-bottom: 16px;

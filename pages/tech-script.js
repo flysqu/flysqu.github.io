@@ -90,16 +90,11 @@ export function techSpawnGif(path,isLaptopPic) {
 
     const existingImages = document.querySelectorAll('img');
     for (const existingImg of existingImages) {
-        console.log(existingImg.src)
+        //console.log(existingImg.src)
         if (existingImg.src.includes(path.replace("..",""))) {
-            var audio = new Audio('../resources/audio/invalid.wav');
-            audio.play();
             return;
         }
     }
-
-    var audio = new Audio('../resources/audio/success.wav');
-    audio.play();
 
     const randomGifPath = path
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);

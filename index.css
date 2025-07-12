@@ -114,12 +114,13 @@ header {
     color:rgba(222, 55, 203, 0.2)
 }
 
-.laptopName {
+.openImage {
     text-decoration: underline;
     color: #bb79b2 !important;
     text-decoration-thickness: 3px;
     cursor: pointer;
 }
+
 
 .imageIcon {
     width: 20px;

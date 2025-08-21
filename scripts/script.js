@@ -324,6 +324,6 @@ document.querySelectorAll(".openImage").forEach(element => {
     element.addEventListener("click", function () {
       const imageName = this.getAttribute("data-image");
       const imagePath = `../resources/pictures/${imageName}`;
-      spawnGif(imagePath);
+      spawnGif(imagePath, 350);
     });
   });

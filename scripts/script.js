@@ -1,6 +1,5 @@
 let highestZIndex = 0
 
-// fucky fix
 var els = document.querySelectorAll('[id^="index.css"]');
 if (els.length == 0) {
     var gifPaths = [
@@ -17,7 +16,7 @@ if (els.length == 0) {
         '../resources/gifs/hatsune-miku.gif',
         '../resources/gifs/kaido-shun1.gif',
         '../resources/gifs/kaido-shun2.gif',
-        '../resources/gifs/kinger-digital-circus.gif',
+        '../resources/gifs/kinger.gif',
         '../resources/gifs/kitty-soggen.gif',
         '../resources/gifs/madeline-celeste.gif',
         '../resources/gifs/miku-seseren.gif',
@@ -43,7 +42,7 @@ if (els.length == 0) {
         'resources/gifs/hatsune-miku.gif',
         'resources/gifs/kaido-shun1.gif',
         'resources/gifs/kaido-shun2.gif',
-        'resources/gifs/kinger-digital-circus.gif',
+        'resources/gifs/kinger.gif',
         'resources/gifs/kitty-soggen.gif',
         'resources/gifs/madeline-celeste.gif',
         'resources/gifs/miku-seseren.gif',
@@ -77,7 +76,7 @@ function applyHighestZIndex(element) {
 function dragElement(elmnt, draggable, img, highestZIndex) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var lastTime = 0;
-    var fpsInterval = 1000 / 5; // 30fps
+    var fpsInterval = 500 / 5; // 30fps
 
     if (draggable) {
         draggable.onmousedown = dragMouseDown;
@@ -102,7 +101,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         document.body.style.cursor = "grab";
         img.style.opacity = "0%"
         draggable.style.opacity = "0%"
-
+        elmnt.style.borderTopWidth = "3px"
 
         var currentTime = new Date().getTime();
         if (currentTime - lastTime >= fpsInterval) {
@@ -135,60 +134,58 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         document.body.style.cursor = "default";
         img.style.opacity = "100%"
         draggable.style.opacity = "100%"
+        elmnt.style.borderTopWidth = "0px"
+
 
         document.onmouseup = null;
         document.onmousemove = null;
     }
 }
 
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-  
+export function spawnGif(path = "undefined", size = 400) {
+    if (path == "undefined") {
+        const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
+        path = randomGifPath
+    } else {
+        const existingImages = document.querySelectorAll('img');
+        for (const existingImg of existingImages) {
+            //console.log(existingImg.src)
+            if (existingImg.src.includes(path.replace("..",""))) {
+                return;
+            }
+        }
+    }
 
-function spawnGif() {
-
-    // Select a random GIF path
-    const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
-    //const randomGifPath = "blahaj-spinning.gif"
+    const randomGifPath = path
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
 
     // Create an img element and set its src to the random GIF path
 
     const img = new Image();
     img.src = randomGifPath;
-    img.alt = "Random GIF";
+    img.alt = path;
     img.id = "img"
-    img.style.width = `${225}px`
+    img.style.width = `${size}px`
     img.style.display = "block"
-
 
     img.onload = () => {
             // Calculate random positions within the viewport uwu
-            let rw = getRandomArbitrary(0,vw)
-            let rh = getRandomArbitrary(0,vh)
-
+            let rw = Math.floor(Math.random() * (vw));
+            let rh = Math.floor(Math.random() * (vh));
 
             // SOLVE ISSUE THE ISSUE OF THE
             // Get size of image
 
-            let iwrw = 400 + rw
+            let iwrw = size + rw
             //let ihrh = ih + rh
             // Check if imgSizeX + rw is more then vw
             if (iwrw > vw) {
-                spawnGif()
+                spawnGif(path)
                 //console.log("Fixed Out Of Bounds")
-                //console.log(`  ${iwrw}, ${rw}, ${rh}`)
+                //console.log(`${iwrw}, ${rw}, ${rh}`)
                 return
             }
-
-            //if (ihrh + rh > vh) {
-            //    spawnGif()
-            //    console.log("Fixed Out Of Bounds")
-            //    return
-            //}
 
             // html this creates
             // <div id="window">
@@ -214,8 +211,9 @@ function spawnGif() {
             const windowControls = document.createElement("div")
             windowControls.id = "windowControls"
             const windowName = document.createElement("p")
-            windowName.textContent = `${randomGifPath.replace("resources/gifs/", "").replace("../","")}`
+            windowName.textContent = `${randomGifPath.replace("resources/gifs/", "").replace("resources/pictures/","").replace("../","").replace(" (Medium)","").replace("JPG","jpg")}`
             windowName.id = "windowName"
+            windowName.style.flexGrow = "1"
             const windowClose = document.createElement("button")
             windowClose.id = "windowClose"
             windowClose.textContent = "x"
@@ -255,6 +253,8 @@ function spawnGif() {
                           border-bottom-style: solid;
                           border-left-style: solid;
                           opacity: 0;
+                          border-top-width: 0px;
+                          border-right-width: 3px;
                         }
                         
                         #windowControls {
@@ -278,18 +278,11 @@ function spawnGif() {
                         }
           
                         #windowControls button {
+                          margin-left: auto;
                           background-color: rgb(241, 160, 231);
                           color: #5C3357;
                           box-shadow: none;
                           border: none;
-                        }
-                        
-                        #windowControls button:nth-child(0) {
-                            margin-left: auto;
-                        }
-
-                        #windowControls button:nth-child(2) {
-                            margin-left: auto;
                         }
                         
                         #img {
@@ -310,7 +303,9 @@ function spawnGif() {
             document.getElementsByTagName('head')[0].appendChild(style);
 
             document.body.appendChild(window);
-            
+
+            let maxWidthA = size
+            img.style.maxWidth = `${maxWidthA}px`
             window.appendChild(img);
             
             dragElement(window, windowControls, img, highestZIndex);
@@ -320,6 +315,15 @@ function spawnGif() {
     img.onerror = () => {
         console.error(`Failed to load image: ${randomGifPath}`);
     };
+    
 }
 
-spawnGif();
+spawnGif("undefined", 200)
+
+document.querySelectorAll(".openImage").forEach(element => {
+    element.addEventListener("click", function () {
+      const imageName = this.getAttribute("data-image");
+      const imagePath = `../resources/pictures/${imageName}`;
+      spawnGif(imagePath);
+    });
+  });

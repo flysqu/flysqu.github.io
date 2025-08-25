@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Coiny'; /*a name to be used later*/
+    src: url('resources/fonts/coiny-cyrillic.otf'); /*URL to font*/
+}
+
 * {
     font-family: "Coiny", system-ui;
     font-weight: 400;

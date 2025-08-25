@@ -77,31 +77,56 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var lastTime = 0;
     var fpsInterval = 500 / 5; // 30fps
+    var activePointerId = null;
 
-    if (draggable) {
-        draggable.onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
-    }
+    // ensure touch/gesture defaults don't interfere with dragging
+    try {
+        (elmnt).style.touchAction = 'none';
+        if (draggable) draggable.style.touchAction = 'none';
+        if (img) img.style.touchAction = 'none';
 
-    function dragMouseDown(e) {
-        e = e || window.event;
+        (elmnt).style.userSelect = 'none';
+        (elmnt).style.webkitUserSelect = 'none';
+        (elmnt).style.webkitTouchCallout = 'none';
+        if (img) {
+            img.style.userSelect = 'none';
+            img.style.webkitUserSelect = 'none';
+            img.style.webkitTouchCallout = 'none';
+        }
+    } catch (e) { /* ignore style set errors */ }
+
+    const target = draggable || elmnt;
+
+    // Use Pointer Events for unified mouse/touch behavior
+    target.addEventListener('pointerdown', dragPointerDown, { passive: false });
+
+    function dragPointerDown(e) {
+        // only respond to primary button / primary touch
+        if (e.isPrimary === false) return;
         e.preventDefault();
+
+        activePointerId = e.pointerId;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        highestZIndex += 1
-        applyHighestZIndex(elmnt)
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+
+        applyHighestZIndex(elmnt);
+
+        // capture the pointer so we continue getting pointermove events
+        try { target.setPointerCapture(activePointerId); } catch (err) {}
+
+        document.addEventListener('pointermove', elementPointerMove, { passive: false });
+        document.addEventListener('pointerup', closePointerDrag);
+        document.addEventListener('pointercancel', closePointerDrag);
     }
 
-    function elementDrag(e) {
-        e = e || window.event;
+    function elementPointerMove(e) {
+        if (activePointerId !== e.pointerId) return;
         e.preventDefault();
+
         document.body.style.cursor = "grab";
-        img.style.opacity = "0%"
-        draggable.style.opacity = "0%"
-        elmnt.style.borderTopWidth = "3px"
+        if (img) img.style.opacity = "0%";
+        if (draggable) draggable.style.opacity = "0%";
+        elmnt.style.borderTopWidth = "3px";
 
         var currentTime = new Date().getTime();
         if (currentTime - lastTime >= fpsInterval) {
@@ -117,28 +142,36 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         }
     }
 
-    function closeDragElement(e) {
-        // ensure that window is at mouse location when stopping drag uwu
-        e = e || window.event;
-        console.log(e.clientX)
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    function closePointerDrag(e) {
+        if (activePointerId !== null && e.pointerId !== activePointerId && e.type !== 'pointercancel') {
+            // ignore other pointers
+            return;
+        }
 
+        // ensure window is at pointer location when stopping drag
+        try {
+            pos1 = pos3 - (e.clientX || pos3);
+            pos2 = pos4 - (e.clientY || pos4);
+            pos3 = e.clientX || pos3;
+            pos4 = e.clientY || pos4;
 
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        } catch (err) { /* ignore if no client coords */ }
 
         document.body.style.cursor = "default";
-        img.style.opacity = "100%"
-        draggable.style.opacity = "100%"
-        elmnt.style.borderTopWidth = "0px"
+        if (img) img.style.opacity = "100%";
+        if (draggable) draggable.style.opacity = "100%";
+        elmnt.style.borderTopWidth = "0px";
 
+        if (activePointerId !== null) {
+            try { target.releasePointerCapture(activePointerId); } catch (err) {}
+        }
+        activePointerId = null;
 
-        document.onmouseup = null;
-        document.onmousemove = null;
+        document.removeEventListener('pointermove', elementPointerMove);
+        document.removeEventListener('pointerup', closePointerDrag);
+        document.removeEventListener('pointercancel', closePointerDrag);
     }
 }
 
@@ -210,6 +243,12 @@ export function spawnGif(path = "undefined", size = 400) {
             // set up window controls uwu
             const windowControls = document.createElement("div")
             windowControls.id = "windowControls"
+
+            // prevent touch default behaviors (long-press menus, gestures)
+            windowControls.style.touchAction = 'none';
+            windowControls.style.userSelect = 'none';
+            windowControls.style.webkitTouchCallout = 'none';
+
             const windowName = document.createElement("p")
             windowName.textContent = `${randomGifPath.replace("resources/gifs/", "").replace("resources/pictures/","").replace("../","").replace(" (Medium)","").replace("JPG","jpg")}`
             windowName.id = "windowName"
@@ -218,6 +257,11 @@ export function spawnGif(path = "undefined", size = 400) {
             windowClose.id = "windowClose"
             windowClose.textContent = "x"
             windowClose.onclick = function () { window.remove(); }
+            
+            // also make the image not trigger long-press menus
+            img.style.touchAction = 'none';
+            img.style.userSelect = 'none';
+            img.style.webkitTouchCallout = 'none';
 
             const windowMinimize = document.createElement("button")
             windowMinimize.id = "windowMinimize"

@@ -82,7 +82,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
     // ensure touch/gesture defaults don't interfere with dragging
     try {
         (elmnt).style.touchAction = 'none';
-        if (draggable) draggable.style.touchAction = 'none';
+        if (draggable) document.getElementById("windowControls").style.touchAction = 'none';
         if (img) img.style.touchAction = 'none';
 
         (elmnt).style.userSelect = 'none';
@@ -125,7 +125,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
 
         document.body.style.cursor = "grab";
         if (img) img.style.opacity = "0%";
-        if (draggable) draggable.style.opacity = "0%";
+        if (draggable) document.getElementById("windowControls").style.opacity = "0%";
         elmnt.style.borderTopWidth = "3px";
 
         var currentTime = new Date().getTime();
@@ -161,7 +161,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
 
         document.body.style.cursor = "default";
         if (img) img.style.opacity = "100%";
-        if (draggable) draggable.style.opacity = "100%";
+        if (draggable) document.getElementById("windowControls").style.opacity = "100%";
         elmnt.style.borderTopWidth = "0px";
 
         if (activePointerId !== null) {
@@ -313,6 +313,7 @@ export function spawnGif(path = "undefined", size = 400) {
                         }
                         #windowControls p {
                           color: #5C3357;
+                          height: fit-content;
                           margin-top: 0;
                           text-align: left;
                           line-height: 20px;
@@ -352,7 +353,7 @@ export function spawnGif(path = "undefined", size = 400) {
             img.style.maxWidth = `${maxWidthA}px`
             window.appendChild(img);
             
-            dragElement(window, windowControls, img, highestZIndex);
+            dragElement(window, windowName, img, highestZIndex);
     };
 
 

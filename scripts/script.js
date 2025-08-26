@@ -1,5 +1,42 @@
 let highestZIndex = 0
 
+var els = document.querySelectorAll('[id^="index.css"]');
+var gifPaths = [
+    'resources/gifs/anime-waves-hi.gif',
+    'resources/gifs/blahaj-spinning.gif',
+    'resources/gifs/blahaj-sunset.gif',
+    'resources/gifs/bocchi-cry.gif',
+    'resources/gifs/bocchi-despair.gif',
+    'resources/gifs/many-bocchis-dance.gif',
+    'resources/gifs/bocchi-solo-dance.gif',
+    'resources/gifs/cat-keyboard.gif',
+    'resources/gifs/miku-ear-flap.gif',
+    'resources/gifs/hatsune-miku.gif',
+    'resources/gifs/kaido-shun1.gif',
+    'resources/gifs/kaido-shun2.gif',
+    'resources/gifs/kinger.gif',
+    'resources/gifs/kitty-soggen.gif',
+    'resources/gifs/madeline-celeste.gif',
+    'resources/gifs/miku-seseren.gif',
+    'resources/gifs/miku.gif',
+    'resources/gifs/patapata.gif',
+    'resources/gifs/kuriko.gif',
+    'resources/gifs/promised-neverland.gif',
+    'resources/gifs/venetian-snares.gif',
+    'resources/gifs/violent-cat.gif',
+    'resources/gifs/anime-hacking.gif',
+];
+var gifPathModifier = "../"
+var newGifPaths = []
+
+if (els.length == 0) {
+    for (const gif of gifPaths) {
+        let newGif = gifPathModifier + gif
+        newGifPaths.push(newGif)
+    }
+    gifPaths = newGifPaths 
+}
+
 function applyHighestZIndex(element) {
     let highestZIndex = 0;
 
@@ -18,35 +55,60 @@ function applyHighestZIndex(element) {
 
 
 // credits to w3schools (https://www.w3schools.com/howto/howto_js_draggable.asp) this is based on that owo
-function dragElement(elmnt, draggable, img, highestZIndex) {
+function dragElement(elmnt, draggable, img, windowControls, highestZIndex) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var lastTime = 0;
-    var fpsInterval = 1000 / 5; // 30fps
+    var fpsInterval = 500 / 5; // 30fps
+    var activePointerId = null;
 
-    if (draggable) {
-        draggable.onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
-    }
+    // ensure touch/gesture defaults don't interfere with dragging
+    try {
+        (elmnt).style.touchAction = 'none';
+        if (draggable) windowControls.style.touchAction = 'none';
+        if (img) img.style.touchAction = 'none';
 
-    function dragMouseDown(e) {
-        e = e || window.event;
+        (elmnt).style.userSelect = 'none';
+        (elmnt).style.webkitUserSelect = 'none';
+        (elmnt).style.webkitTouchCallout = 'none';
+        if (img) {
+            img.style.userSelect = 'none';
+            img.style.webkitUserSelect = 'none';
+            img.style.webkitTouchCallout = 'none';
+        }
+    } catch (e) { /* ignore style set errors */ }
+
+    const target = draggable || elmnt;
+
+    // Use Pointer Events for unified mouse/touch behavior
+    target.addEventListener('pointerdown', dragPointerDown, { passive: false });
+
+    function dragPointerDown(e) {
+        // only respond to primary button / primary touch
+        if (e.isPrimary === false) return;
         e.preventDefault();
+
+        activePointerId = e.pointerId;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        highestZIndex += 1
-        applyHighestZIndex(elmnt)
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+
+        applyHighestZIndex(elmnt);
+
+        // capture the pointer so we continue getting pointermove events
+        try { target.setPointerCapture(activePointerId); } catch (err) {}
+
+        document.addEventListener('pointermove', elementPointerMove, { passive: false });
+        document.addEventListener('pointerup', closePointerDrag);
+        document.addEventListener('pointercancel', closePointerDrag);
     }
 
-    function elementDrag(e) {
-        e = e || window.event;
+    function elementPointerMove(e) {
+        if (activePointerId !== e.pointerId) return;
         e.preventDefault();
-        document.body.style.cursor = "grab";
-        img.style.opacity = "0%"
-        draggable.style.opacity = "0%"
 
+        document.body.style.cursor = "grab";
+        if (img) img.style.opacity = "0%";
+        if (draggable) windowControls.style.opacity = "0%";
+        elmnt.style.borderTopWidth = "3px";
 
         var currentTime = new Date().getTime();
         if (currentTime - lastTime >= fpsInterval) {
@@ -62,37 +124,50 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
         }
     }
 
-    function closeDragElement(e) {
-        // ensure that window is at mouse location when stopping drag uwu
-        e = e || window.event;
-        console.log(e.clientX)
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    function closePointerDrag(e) {
+        if (activePointerId !== null && e.pointerId !== activePointerId && e.type !== 'pointercancel') {
+            // ignore other pointers
+            return;
+        }
 
+        // ensure window is at pointer location when stopping drag
+        try {
+            pos1 = pos3 - (e.clientX || pos3);
+            pos2 = pos4 - (e.clientY || pos4);
+            pos3 = e.clientX || pos3;
+            pos4 = e.clientY || pos4;
 
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        } catch (err) { /* ignore if no client coords */ }
 
         document.body.style.cursor = "default";
-        img.style.opacity = "100%"
-        draggable.style.opacity = "100%"
+        if (img) img.style.opacity = "100%";
+        if (draggable) windowControls.style.opacity = "100%";
+        elmnt.style.borderTopWidth = "0px";
 
-        document.onmouseup = null;
-        document.onmousemove = null;
+        if (activePointerId !== null) {
+            try { target.releasePointerCapture(activePointerId); } catch (err) {}
+        }
+        activePointerId = null;
+
+        document.removeEventListener('pointermove', elementPointerMove);
+        document.removeEventListener('pointerup', closePointerDrag);
+        document.removeEventListener('pointercancel', closePointerDrag);
     }
 }
 
-export function techSpawnGif(path,isLaptopPic) {
-    //const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
-
-    const existingImages = document.querySelectorAll('img');
-    for (const existingImg of existingImages) {
-        //console.log(existingImg.src)
-        if (existingImg.src.includes(path.replace("..",""))) {
-            return;
+export function spawnGif(path = "undefined", size = 400) {
+    if (path == "undefined") {
+        const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
+        path = randomGifPath
+    } else {
+        const existingImages = document.querySelectorAll('img');
+        for (const existingImg of existingImages) {
+            //console.log(existingImg.src)
+            if (existingImg.src.includes(path.replace("..",""))) {
+                return;
+            }
         }
     }
 
@@ -100,16 +175,14 @@ export function techSpawnGif(path,isLaptopPic) {
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-
     // Create an img element and set its src to the random GIF path
 
     const img = new Image();
     img.src = randomGifPath;
     img.alt = path;
     img.id = "img"
-    img.style.width = `${400}px`
+    img.style.width = `${size}px`
     img.style.display = "block"
-
 
     img.onload = () => {
             // Calculate random positions within the viewport uwu
@@ -119,11 +192,11 @@ export function techSpawnGif(path,isLaptopPic) {
             // SOLVE ISSUE THE ISSUE OF THE
             // Get size of image
 
-            let iwrw = 400 + rw
+            let iwrw = size + rw
             //let ihrh = ih + rh
             // Check if imgSizeX + rw is more then vw
             if (iwrw > vw) {
-                techSpawnGif(path,isLaptopPic)
+                spawnGif(path)
                 //console.log("Fixed Out Of Bounds")
                 //console.log(`${iwrw}, ${rw}, ${rh}`)
                 return
@@ -152,14 +225,25 @@ export function techSpawnGif(path,isLaptopPic) {
             // set up window controls uwu
             const windowControls = document.createElement("div")
             windowControls.id = "windowControls"
+
+            // prevent touch default behaviors (long-press menus, gestures)
+            windowControls.style.touchAction = 'none';
+            windowControls.style.userSelect = 'none';
+            windowControls.style.webkitTouchCallout = 'none';
+
             const windowName = document.createElement("p")
-            windowName.textContent = `${randomGifPath.replace("resources/pictures/", "").replace("../","").replace(" (Medium)","").replace("JPG","jpg")}`
+            windowName.textContent = `${randomGifPath.replace("resources/gifs/", "").replace("resources/pictures/","").replace("../","").replace(" (Medium)","").replace("JPG","jpg")}`
             windowName.id = "windowName"
             windowName.style.flexGrow = "1"
             const windowClose = document.createElement("button")
             windowClose.id = "windowClose"
             windowClose.textContent = "x"
             windowClose.onclick = function () { window.remove(); }
+            
+            // also make the image not trigger long-press menus
+            img.style.touchAction = 'none';
+            img.style.userSelect = 'none';
+            img.style.webkitTouchCallout = 'none';
 
             const windowMinimize = document.createElement("button")
             windowMinimize.id = "windowMinimize"
@@ -195,6 +279,8 @@ export function techSpawnGif(path,isLaptopPic) {
                           border-bottom-style: solid;
                           border-left-style: solid;
                           opacity: 0;
+                          border-top-width: 0px;
+                          border-right-width: 3px;
                         }
                         
                         #windowControls {
@@ -209,6 +295,7 @@ export function techSpawnGif(path,isLaptopPic) {
                         }
                         #windowControls p {
                           color: #5C3357;
+                          height: fit-content;
                           margin-top: 0;
                           text-align: left;
                           line-height: 20px;
@@ -244,11 +331,11 @@ export function techSpawnGif(path,isLaptopPic) {
 
             document.body.appendChild(window);
 
-            let maxWidthA = 400
+            let maxWidthA = size
             img.style.maxWidth = `${maxWidthA}px`
             window.appendChild(img);
             
-            dragElement(window, windowControls, img, highestZIndex);
+            dragElement(window, windowName, img, windowControls, highestZIndex);
     };
 
 
@@ -258,10 +345,12 @@ export function techSpawnGif(path,isLaptopPic) {
     
 }
 
+spawnGif("undefined", 200)
+
 document.querySelectorAll(".openImage").forEach(element => {
     element.addEventListener("click", function () {
       const imageName = this.getAttribute("data-image");
       const imagePath = `../resources/pictures/${imageName}`;
-      techSpawnGif(imagePath, true);
+      spawnGif(imagePath, 350);
     });
   });

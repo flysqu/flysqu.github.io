@@ -1,58 +1,40 @@
 let highestZIndex = 0
 
 var els = document.querySelectorAll('[id^="index.css"]');
+var gifPaths = [
+    'resources/gifs/anime-waves-hi.gif',
+    'resources/gifs/blahaj-spinning.gif',
+    'resources/gifs/blahaj-sunset.gif',
+    'resources/gifs/bocchi-cry.gif',
+    'resources/gifs/bocchi-despair.gif',
+    'resources/gifs/many-bocchis-dance.gif',
+    'resources/gifs/bocchi-solo-dance.gif',
+    'resources/gifs/cat-keyboard.gif',
+    'resources/gifs/miku-ear-flap.gif',
+    'resources/gifs/hatsune-miku.gif',
+    'resources/gifs/kaido-shun1.gif',
+    'resources/gifs/kaido-shun2.gif',
+    'resources/gifs/kinger.gif',
+    'resources/gifs/kitty-soggen.gif',
+    'resources/gifs/madeline-celeste.gif',
+    'resources/gifs/miku-seseren.gif',
+    'resources/gifs/miku.gif',
+    'resources/gifs/patapata.gif',
+    'resources/gifs/kuriko.gif',
+    'resources/gifs/promised-neverland.gif',
+    'resources/gifs/venetian-snares.gif',
+    'resources/gifs/violent-cat.gif',
+    'resources/gifs/anime-hacking.gif',
+];
+var gifPathModifier = "../"
+var newGifPaths = []
+
 if (els.length == 0) {
-    var gifPaths = [
-        '../resources/gifs/anime-hacking.gif',
-        '../resources/gifs/anime-waves-hi.gif',
-        '../resources/gifs/blahaj-spinning.gif',
-        '../resources/gifs/blahaj-sunset.gif',
-        '../resources/gifs/bocchi-cry.gif',
-        '../resources/gifs/bocchi-despair.gif',
-        '../resources/gifs/many-bocchis-dance.gif',
-        '../resources/gifs/bocchi-solo-dance.gif',
-        '../resources/gifs/cat-keyboard.gif',
-        '../resources/gifs/miku-ear-flap.gif',
-        '../resources/gifs/hatsune-miku.gif',
-        '../resources/gifs/kaido-shun1.gif',
-        '../resources/gifs/kaido-shun2.gif',
-        '../resources/gifs/kinger.gif',
-        '../resources/gifs/kitty-soggen.gif',
-        '../resources/gifs/madeline-celeste.gif',
-        '../resources/gifs/miku-seseren.gif',
-        '../resources/gifs/miku.gif',
-        '../resources/gifs/patapata.gif',
-        '../resources/gifs/kuriko.gif',
-        '../resources/gifs/promised-neverland.gif',
-        '../resources/gifs/venetian-snares.gif',
-        '../resources/gifs/violent-cat.gif',
-    ];
-}else {
-    var gifPaths = [
-        'resources/gifs/anime-hacking.gif',
-        'resources/gifs/anime-waves-hi.gif',
-        'resources/gifs/blahaj-spinning.gif',
-        'resources/gifs/blahaj-sunset.gif',
-        'resources/gifs/bocchi-cry.gif',
-        'resources/gifs/bocchi-despair.gif',
-        'resources/gifs/many-bocchis-dance.gif',
-        'resources/gifs/bocchi-solo-dance.gif',
-        'resources/gifs/cat-keyboard.gif',
-        'resources/gifs/miku-ear-flap.gif',
-        'resources/gifs/hatsune-miku.gif',
-        'resources/gifs/kaido-shun1.gif',
-        'resources/gifs/kaido-shun2.gif',
-        'resources/gifs/kinger.gif',
-        'resources/gifs/kitty-soggen.gif',
-        'resources/gifs/madeline-celeste.gif',
-        'resources/gifs/miku-seseren.gif',
-        'resources/gifs/miku.gif',
-        'resources/gifs/patapata.gif',
-        'resources/gifs/kuriko.gif',
-        'resources/gifs/promised-neverland.gif',
-        'resources/gifs/venetian-snares.gif',
-        'resources/gifs/violent-cat.gif',
-    ];
+    for (const gif of gifPaths) {
+        let newGif = gifPathModifier + gif
+        newGifPaths.push(newGif)
+    }
+    gifPaths = newGifPaths 
 }
 
 function applyHighestZIndex(element) {

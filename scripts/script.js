@@ -55,7 +55,7 @@ function applyHighestZIndex(element) {
 
 
 // credits to w3schools (https://www.w3schools.com/howto/howto_js_draggable.asp) this is based on that owo
-function dragElement(elmnt, draggable, img, highestZIndex) {
+function dragElement(elmnt, draggable, img, windowControls, highestZIndex) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     var lastTime = 0;
     var fpsInterval = 500 / 5; // 30fps
@@ -64,7 +64,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
     // ensure touch/gesture defaults don't interfere with dragging
     try {
         (elmnt).style.touchAction = 'none';
-        if (draggable) document.getElementById("windowControls").style.touchAction = 'none';
+        if (draggable) windowControls.style.touchAction = 'none';
         if (img) img.style.touchAction = 'none';
 
         (elmnt).style.userSelect = 'none';
@@ -107,7 +107,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
 
         document.body.style.cursor = "grab";
         if (img) img.style.opacity = "0%";
-        if (draggable) document.getElementById("windowControls").style.opacity = "0%";
+        if (draggable) windowControls.style.opacity = "0%";
         elmnt.style.borderTopWidth = "3px";
 
         var currentTime = new Date().getTime();
@@ -143,7 +143,7 @@ function dragElement(elmnt, draggable, img, highestZIndex) {
 
         document.body.style.cursor = "default";
         if (img) img.style.opacity = "100%";
-        if (draggable) document.getElementById("windowControls").style.opacity = "100%";
+        if (draggable) windowControls.style.opacity = "100%";
         elmnt.style.borderTopWidth = "0px";
 
         if (activePointerId !== null) {
@@ -335,7 +335,7 @@ export function spawnGif(path = "undefined", size = 400) {
             img.style.maxWidth = `${maxWidthA}px`
             window.appendChild(img);
             
-            dragElement(window, windowName, img, highestZIndex);
+            dragElement(window, windowName, img, windowControls, highestZIndex);
     };
 
 

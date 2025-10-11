@@ -1,3 +1,14 @@
+const startDate = new Date('2025-08-16');
+const today = new Date();
+const diffTime = today - startDate;
+const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+const hrtDaysElem = document.getElementById('hrt_days');
+if (hrtDaysElem) {
+    hrtDaysElem.textContent = `Days on HRT: ${diffDays}`;
+}
+
+
+
 let highestZIndex = 0
 
 var els = document.querySelectorAll('[id^="index.css"]');

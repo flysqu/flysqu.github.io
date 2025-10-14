@@ -359,6 +359,11 @@ export function spawnGif(path = "undefined", size = 400) {
 spawnGif("undefined", 200)
 
 document.querySelectorAll(".openImage").forEach(element => {
+    const ImageIcon = document.createElement('img');
+    ImageIcon.className = "imageIcon";
+    ImageIcon.src = "../resources/icons/imageicon.svg";
+
+    element.appendChild(ImageIcon)
     element.addEventListener("click", function () {
       const imageName = this.getAttribute("data-image");
       const imagePath = `../resources/pictures/${imageName}`;

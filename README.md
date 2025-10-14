@@ -5,6 +5,6 @@ nothing since my site is perfect with no glitches or bugs \
 [ ] make gifs randomly place themselves on the right and left side next to page content (alot of work :( ) \
 [x] refactor script.js and tech-js to be the same files as the code is 99% the same \
 [ ] get more gifs. have too few at the moment \
-[ ] make gifs movable on mobile (hell) \
-
+[x] make gifs movable on mobile (hell) \
+\
 run locally using "python3 -m http.server" (im an idiot who forgets how to do this)

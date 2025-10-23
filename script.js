@@ -40,7 +40,10 @@ var gifPaths = [
 var gifPathModifier = "../"
 var newGifPaths = []
 
+var darkmodeGif = 'resources/gifs/flashbang-cat.gif'
+
 if (els.length == 0) {
+    darkmodeGif = gifPathModifier+darkmodeGif 
     for (const gif of gifPaths) {
         let newGif = gifPathModifier + gif
         newGifPaths.push(newGif)
@@ -170,8 +173,15 @@ function dragElement(elmnt, draggable, img, windowControls, highestZIndex) {
 
 export function spawnGif(path = "undefined", size = 400) {
     if (path == "undefined") {
-        const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
-        path = randomGifPath
+        // If dark mode is on, show flashbang cat
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            path = darkmodeGif
+        } else {
+            const randomGifPath = gifPaths[Math.floor(Math.random() * gifPaths.length)];
+            path = randomGifPath
+        }
+
+
     } else {
         const existingImages = document.querySelectorAll('img');
         for (const existingImg of existingImages) {
@@ -204,12 +214,12 @@ export function spawnGif(path = "undefined", size = 400) {
             // Get size of image
 
             let iwrw = size + rw
-            //let ihrh = ih + rh
+            // let ihrh = ih + rh
             // Check if imgSizeX + rw is more then vw
             if (iwrw > vw) {
                 spawnGif(path)
-                //console.log("Fixed Out Of Bounds")
-                //console.log(`${iwrw}, ${rw}, ${rh}`)
+                // console.log("Fixed Out Of Bounds")
+                // console.log(`${iwrw}, ${rw}, ${rh}`)
                 return
             }
 

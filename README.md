@@ -1,5 +1,6 @@
 todo-list: \
-nothing since my site is perfect with no glitches or bugs \
+1. nothing since my site is perfect with no glitches or bugs :3 \
+anyway heres an unrelated list of things that i maybe should do
 [ ] make it randomly spawn windows inside the current "viewport" \
 [ ] make blog posts and a system to load blog posts \
 [ ] make gifs randomly place themselves on the right and left side next to page content (alot of work :( ) \

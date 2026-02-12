@@ -133,3 +133,38 @@ header {
     top: 7.7px;
     filter: invert(61%) sepia(13%) saturate(1326%) hue-rotate(257deg) brightness(88%) contrast(81%);
 }
+
+.project-card {
+    background-color: rgba(255, 170, 240, 0.3);
+    border: 2px solid rgb(241, 160, 231);
+    padding: 12px;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.project-title {
+    font-size: large;
+}
+
+.project-lang {
+    font-size: small;
+    color: #A35A99;
+    opacity: 0.7;
+    margin-left: 6px;
+}
+
+.project-tag {
+    font-size: small;
+    padding: 2px 8px;
+    margin-left: 6px;
+}
+
+.tag-recent {
+    background-color: rgba(170, 255, 200, 0.5);
+    color: #4a8a5a;
+}
+
+.tag-old {
+    background-color: rgba(200, 180, 255, 0.4);
+    color: #7a5a99;
+}
